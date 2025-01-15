@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import plotly.express as px
 import streamlit as st
 
@@ -76,6 +75,7 @@ with col1:
     selet_year_data = top_10_year[top_10_year["year"] == select_year]
     selet_year_data = selet_year_data.head(10)
 
+    selet_year_data['year'] = selet_year_data['year'].astype(str)
 
     # Display the Table
     st.write(f"**<span style='font-size: 24px;'>Top 10 Tracks for {select_year}</span>**", unsafe_allow_html=True)
