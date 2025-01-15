@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import plotly.express as px
 import streamlit as st
 
@@ -45,6 +44,9 @@ top_10_tracks = (
 
 select_track = st.sidebar.selectbox("Select Track:", top_10_tracks["name"].unique())
 
+select_track_artist = data[data["name_x"] == select_track][["name_y", "popularity", "followers"]].drop_duplicates()
+
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("**About:**")
 
@@ -61,29 +63,36 @@ col1, col2 = st.columns([1,3], gap='medium')
 with col1:
     #Artist Info
     st.write(f"**<span style='font-size: 24px;'>Track Info</span>**", unsafe_allow_html=True)
-    st.markdown(f"**Artist:**  <br><span style='font-size: 18px;'>{selected_data['name_y']}</span>", unsafe_allow_html=True)
-    st.markdown(f"**Popularity:**  <br><span style='font-size: 18px;'>{selected_data['popularity']}</span>", unsafe_allow_html=True)
-    st.markdown(f"**Followers:**  <br><span style='font-size: 18px;'>{selected_data['followers']}</span>", unsafe_allow_html=True)
+#    st.markdown(f"**Artist:**  <br><span style='font-size: 18px;'>{selected_data['name_y']}</span>", unsafe_allow_html=True)
+ #   st.markdown(f"**Popularity:**  <br><span style='font-size: 18px;'>{selected_data['popularity']}</span>", unsafe_allow_html=True)
+  #  st.markdown(f"**Followers:**  <br><span style='font-size: 18px;'>{selected_data['followers']}</span>", unsafe_allow_html=True)
+
+    st.dataframe(
+        select_track_artist.rename(columns = {"name_y": "Arist","popularity": "Popularity", "followers": "Followers"}),
+        hide_index = True,
+        use_container_width=True
+    )
 
     #Explicit info
     explicit = "Yes" if selected_data["explicit"] == True else "No"
-    st.write(f"**Explicit:** {'Yes' if selected_data['explicit'] else 'No'}")
+    st.write(f"**Is Track Explicit:** {'Yes' if selected_data['explicit'] else 'No'}")
 
     #Top 10 tracks list
     top_10_year = data_top.groupby(["year", "name"])["chart_week"].count().sort_values(ascending=False).reset_index()
-     # Rename columns
-    #top_10_year.columns = ["Track Name", "# of Weeks"]
+
     selet_year_data = top_10_year[top_10_year["year"] == select_year]
     selet_year_data = selet_year_data.head(10)
 
+    selet_year_data['year'] = selet_year_data['year'].astype(str)
+    selet_year_data = selet_year_data.drop(columns=["year"])
 
     # Display the Table
     st.write(f"**<span style='font-size: 24px;'>Top 10 Tracks for {select_year}</span>**", unsafe_allow_html=True)
     st.dataframe(
         selet_year_data,
         hide_index=True,
-        width=None,
-        height=None
+        height=None,
+        use_container_width=True
     )
 
 #Coumn 2: Line Charts + KPI's
