@@ -141,8 +141,6 @@ col1, col2 = st.columns([1, 3])
 with col1:
     st.subheader("Track Details")
     st.write(f"**Track Name:** {track_name}")
-    st.write(f"**Track ID:** {track_id}")
-    st.write(f"**Release Year:** {release_year}")
     st.write(f"**Artist Type:** {artist_type}")
     st.write(f"**Duration:** {track_duration}")
     st.write(f"**Number of Weeks on Chart:** {no_of_weeks_on_chart}")
