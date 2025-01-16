@@ -138,3 +138,44 @@ with col2:
         with kpi_cols[idx]:
             st.metric(kpi, round(value,2))
 
+# ARON'S CODE STARTS HERE
+st.markdown("---")
+st.header("Moodboard of Tracks by Release Year and Audio Features")
+
+# Sidebar Filters for Scatter Plot
+selected_metric = st.sidebar.selectbox(
+    "Select Audio Feature:", ["tempo", "danceability", "energy", "valence", "loudness", "speechiness"]
+)
+
+# Filter data for scatter plot by selected year
+scatter_data = data_top[data_top["year"] == select_year]
+
+# Add jitter to avoid overlapping
+scatter_data["jittered_list_position"] = scatter_data["list_position"] + np.random.uniform(
+    -0.5, 0.5, size=scatter_data.shape[0]
+)
+
+# Create scatter plot
+fig_scatter = px.scatter(
+    scatter_data,
+    x=selected_metric,
+    y="jittered_list_position",
+    size="list_position",
+    color=selected_metric,
+    hover_name="name",
+    title=f"{selected_metric.capitalize()} Distribution for Tracks in {select_year}",
+    labels={"jittered_list_position": "Chart Position (Jittered)", selected_metric: selected_metric.capitalize()},
+    color_continuous_scale="Plasma",
+)
+
+# Customize scatter plot layout
+fig_scatter.update_layout(
+    xaxis_title=selected_metric.capitalize(),
+    yaxis_title="Chart Position",
+    template="simple_white",
+    title_font=dict(size=20),
+)
+
+# Display scatter plot
+st.plotly_chart(fig_scatter, use_container_width=True)
+# ARON'S CODE ENDS HERE
