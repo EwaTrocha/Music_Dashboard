@@ -82,6 +82,12 @@ top_track_artist_grouped_chart_week['artist_type'] = top_track_artist_grouped_ch
     lambda x: 'Solo Artist' if x == 1 else 'Multiple Artists'
 )
 
+# no_of_weeks_on_chart
+top_track_artist_grouped_chart_week['adjusted_weeks_on_chart'] = (
+    top_track_artist_grouped_chart_week['no_of_weeks_on_chart'] / 
+    top_track_artist_grouped_chart_week['artist_count']
+    ).round(0).astype(int)
+
 # Extracting release year
 top_track_artist_grouped_chart_week['release_date'] = pd.to_datetime(top_track_artist_grouped_chart_week['release_date'])
 top_track_artist_grouped_chart_week['release_year'] = top_track_artist_grouped_chart_week['release_date'].dt.year
@@ -106,7 +112,7 @@ artist_names = track_data["artist_name"].split("|")
 popularity = track_data["popularity"].split(", ")
 followers = track_data["followers"].split(", ")
 duration_ms = track_data["duration_ms"]
-no_of_weeks_on_chart = track_data["no_of_weeks_on_chart"]
+no_of_weeks_on_chart = track_data["adjusted_weeks_on_chart"]
 artist_type = track_data["artist_type"]
 
 # Format track duration
