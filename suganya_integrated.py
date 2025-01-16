@@ -5,8 +5,8 @@ import plotly.express as px
 import streamlit as st
 
 # Load data
-data = pd.read_csv("all_track_artist.csv")
-data_top = pd.read_csv("chart_filter_release.csv")
+data = pd.read_csv("data/all_track_artist.csv")
+data_top = pd.read_csv("data/chart_filter_release.csv")
 
 # Changing "chart_week" to datetime format
 data["chart_week"] = pd.to_datetime(data["chart_week"])
