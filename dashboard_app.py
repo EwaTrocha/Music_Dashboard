@@ -79,7 +79,7 @@ with col1:
     # Display the Table
     st.write(f"**<span style='font-size: 24px;'>Top 10 Tracks for {select_year}</span>**", unsafe_allow_html=True)
     st.dataframe(
-        selet_year_data,
+        selet_year_data.rename(columns = {"chart_week": "# of Weeks"}),
         hide_index=True,
         height=None,
         use_container_width=True
