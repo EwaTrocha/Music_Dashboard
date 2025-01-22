@@ -146,15 +146,6 @@ selected_metric = st.sidebar.selectbox(
     "Select Audio Feature:", ["tempo", "danceability", "energy", "valence", "loudness", "speechiness"]
 )
 
-#Pusing text down
-st.sidebar.markdown("<br>"*14, unsafe_allow_html=True)
-st.sidebar.markdown(
-    "**Data Sources:**<br>"
-    "1. Billboard Top 50 weekly charts (2000-2024)<br>"
-    "2. Spotify API",
-    unsafe_allow_html=True
-)
-
 # Filter data for scatter plot by selected year
 scatter_data = data_top[data_top["year"] == select_year]
 
@@ -213,3 +204,12 @@ fig_scatter.update_layout(
 # Display scatter plot
 st.plotly_chart(fig_scatter, use_container_width=True)
 # ARON'S CODE ENDS HERE
+
+#Pusing text down
+st.sidebar.markdown("<br>"*14, unsafe_allow_html=True)
+st.sidebar.markdown(
+    "**Data Sources:**<br>"
+    "1. Billboard Top 50 weekly charts (2000-2024)<br>"
+    "2. Spotify API",
+    unsafe_allow_html=True
+)
